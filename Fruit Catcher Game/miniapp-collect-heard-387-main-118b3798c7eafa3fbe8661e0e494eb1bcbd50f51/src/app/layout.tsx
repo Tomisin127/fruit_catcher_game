@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "@coinbase/onchainkit/styles.css";
 import "./globals.css";
+import "./onchainkit.css";
 import { ResponseLogger } from "@/components/response-logger";
 import { cookies } from "next/headers";
 import { ReadyNotifier } from "@/components/ready-notifier";
@@ -53,6 +53,9 @@ export default async function RootLayout({
     <html lang="en">
       <head>
         {requestId && <meta name="x-request-id" content={requestId} />}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
