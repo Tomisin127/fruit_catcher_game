@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import "@coinbase/onchainkit/styles.css";
 import "./globals.css";
 import { ResponseLogger } from "@/components/response-logger";
 import { cookies } from "next/headers";
