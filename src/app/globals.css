@@ -1,0 +1,144 @@
+@import 'tailwindcss';
+
+@theme inline {
+  /* White/Light theme with colorful accents */
+  --color-background: #ffffff;
+  --color-foreground: #1a1a2e;
+  --color-card: #f8fafc;
+  --color-card-foreground: #1a1a2e;
+  --color-primary: #ff6b6b;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #4ecdc4;
+  --color-secondary-foreground: #ffffff;
+  --color-accent: #ffe66d;
+  --color-accent-foreground: #1a1a2e;
+  --color-muted: #f1f5f9;
+  --color-muted-foreground: #64748b;
+  --color-border: #e2e8f0;
+  --color-input: #f8fafc;
+  --color-ring: #ff6b6b;
+  --color-destructive: #ff6b6b;
+  --color-destructive-foreground: #ffffff;
+  
+  /* Fruit colors */
+  --color-strawberry: #ff6b6b;
+  --color-banana: #ffe66d;
+  --color-watermelon: #4ecdc4;
+  --color-grape: #a855f7;
+  --color-orange: #fb923c;
+  
+  --radius: 1rem;
+  --font-sans: 'DM Sans', 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback', monospace;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+canvas {
+  display: block;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Soft colorful glow effect */
+.fruit-glow {
+  box-shadow: 
+    0 4px 20px rgba(255, 107, 107, 0.15),
+    0 8px 40px rgba(78, 205, 196, 0.1);
+}
+
+/* Colorful text gradient */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-strawberry), var(--color-secondary), var(--color-grape));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card with subtle shadow */
+.card-shadow {
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 10px 15px -3px rgba(0, 0, 0, 0.08);
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-8px) scale(1.02); }
+}
+
+.animate-bounce-soft {
+  animation: bounce-soft 2s ease-in-out infinite;
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.02); }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+.animate-sparkle {
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+/* Colorful border gradient */
+.border-gradient {
+  background: linear-gradient(white, white) padding-box,
+              linear-gradient(135deg, var(--color-strawberry), var(--color-secondary), var(--color-banana)) border-box;
+  border: 2px solid transparent;
+}
+
+/* Game-specific styles */
+.game-container {
+  background: linear-gradient(180deg, #e0f2fe 0%, #f0fdf4 50%, #fef3c7 100%);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
