@@ -42,7 +42,6 @@ canvas {
   -webkit-touch-callout: none;
 }
 
-/* Neon glow effects */
 .neon-glow {
   box-shadow: 
     0 0 5px currentColor,
@@ -57,7 +56,6 @@ canvas {
     0 0 20px currentColor;
 }
 
-/* Animated gradient background */
 @keyframes gradient-shift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -68,7 +66,6 @@ canvas {
   animation: gradient-shift 8s ease infinite;
 }
 
-/* Floating animation */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
@@ -78,7 +75,6 @@ canvas {
   animation: float 3s ease-in-out infinite;
 }
 
-/* Pulse glow */
 @keyframes pulse-glow {
   0%, 100% { opacity: 1; box-shadow: 0 0 20px rgba(255, 107, 53, 0.5); }
   50% { opacity: 0.8; box-shadow: 0 0 40px rgba(255, 107, 53, 0.8); }
@@ -88,7 +84,6 @@ canvas {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-/* Shimmer effect */
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
