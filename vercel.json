@@ -1,7 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "cd \"Fruit Catcher Game/miniapp-collect-heard-387-main-118b3798c7eafa3fbe8661e0e494eb1bcbd50f51\" && pnpm install && pnpm build",
-  "outputDirectory": "Fruit Catcher Game/miniapp-collect-heard-387-main-118b3798c7eafa3fbe8661e0e494eb1bcbd50f51/.next",
-  "installCommand": "cd \"Fruit Catcher Game/miniapp-collect-heard-387-main-118b3798c7eafa3fbe8661e0e494eb1bcbd50f51\" && pnpm install",
   "framework": "nextjs"
 }
