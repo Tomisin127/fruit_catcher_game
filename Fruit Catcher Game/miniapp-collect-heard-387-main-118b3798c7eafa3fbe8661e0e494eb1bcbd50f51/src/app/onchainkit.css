@@ -1,0 +1,36 @@
+/* OnchainKit custom styles - fonts loaded via HTML link tags in layout.tsx */
+
+/* OnchainKit component base styles */
+.ock-font-family {
+  font-family: 'Inter', 'DM Sans', system-ui, sans-serif;
+}
+
+/* Wallet connect button styles */
+[data-testid="ockConnectWallet_Container"] {
+  font-family: 'Inter', 'DM Sans', system-ui, sans-serif;
+}
+
+/* Identity components */
+.ock-text-foreground {
+  color: inherit;
+}
+
+.ock-text-foreground-muted {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ock-bg-default {
+  background-color: rgba(18, 18, 26, 0.95);
+}
+
+.ock-bg-default-hover:hover {
+  background-color: rgba(30, 30, 46, 0.95);
+}
+
+.ock-border-radius {
+  border-radius: 0.75rem;
+}
+
+.ock-border-radius-inner {
+  border-radius: 0.5rem;
+}

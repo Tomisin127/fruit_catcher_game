@@ -6,26 +6,29 @@ export default async function middleware(request: NextRequest) {
   const requestId = crypto.randomUUID();
 
   try {
-    await fetch(url.toString(), {
-      method: "POST",
-      body: JSON.stringify({
-        level: "info",
-        requestId,
-        request: {
-          url: request.url,
-          method: request.method,
-          path: request.nextUrl.pathname,
-          referrerPolicy: request.referrerPolicy,
-          headers: Object.fromEntries(request.headers.entries()),
-          cookies: request.cookies.getAll().reduce((acc, cookie) => {
-            acc[cookie.name] = cookie.value;
-            return acc;
-          }, {} as Record<string, string>),
-        },
-      }),
-    });
-  } catch (error) {
-    console.error("Error logging request:", error);
+    // Only log in production to avoid fetch issues in development
+    if (process.env.NODE_ENV === 'production') {
+      await fetch(url.toString(), {
+        method: "POST",
+        body: JSON.stringify({
+          level: "info",
+          requestId,
+          request: {
+            url: request.url,
+            method: request.method,
+            path: request.nextUrl.pathname,
+            referrerPolicy: request.referrerPolicy,
+            headers: Object.fromEntries(request.headers.entries()),
+            cookies: request.cookies.getAll().reduce((acc, cookie) => {
+              acc[cookie.name] = cookie.value;
+              return acc;
+            }, {} as Record<string, string>),
+          },
+        }),
+      });
+    }
+  } catch {
+    // Silently ignore logging errors
   }
 
   const response = NextResponse.next();
