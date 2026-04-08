@@ -145,7 +145,39 @@ export function FruitCatchGame() {
     setIsStarted(true);
   }, []);
 
-  return (
+  // Render game screen if started
+  if (isStarted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50 flex items-center justify-center p-4">
+        <div className="relative w-full max-w-md">
+          <ScoreDisplay score={score} combo={combo} />
+          
+          <GameCanvas
+            key={gameKey}
+            onScoreUpdate={handleScoreUpdate}
+            onGameOver={handleGameOver}
+            onComboUpdate={handleComboUpdate}
+          />
+
+          {isGameOver && (
+            <GameOverScreen
+              score={score}
+              highScore={highScore}
+              onRestart={handleRestart}
+              onBackToHome={handleBackToHome}
+              onClaimScore={handleClaimScore}
+              isNewHighScore={score > 0 && score >= highScore}
+              isClaiming={isClaiming || isPending || isConfirming}
+              hasMintedThisGame={hasMintedThisGame}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+}
+
+  // Render home screen if not started
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
