@@ -21,6 +21,7 @@ export const FRUIT_CONFIGS: Record<string, FruitConfig> = {
     scale: 0.7,
     fallSpeed: 0.3, // Slower initial speed
     probability: 0.6,
+    imagePath: '/strawberry.png',
   },
   banana: {
     type: 'banana',
@@ -30,6 +31,7 @@ export const FRUIT_CONFIGS: Record<string, FruitConfig> = {
     scale: 0.8,
     fallSpeed: 0.5, // Faster but still reasonable
     probability: 0.3,
+    imagePath: '/banana.png',
   },
   watermelon: {
     type: 'watermelon',
@@ -39,11 +41,12 @@ export const FRUIT_CONFIGS: Record<string, FruitConfig> = {
     scale: 1.2,
     fallSpeed: 0.25, // Heavy fruit falls slower initially
     probability: 0.1,
+    imagePath: '/watermelon.png',
   },
 };
 
 export const COLORS = {
-  background: 0xF0F9FF, // Light sky blue - clean and fresh
-  basketMain: 0xA855F7, // Purple basket - stands out on light bg
-  basketGlow: 0xD8B4FE,
+  background: 0x87CEEB, // Sky blue - fresh and open
+  basketMain: 0xD4A574, // Warm tan/beige for basket
+  basketGlow: 0xE8C4A0,
 };
