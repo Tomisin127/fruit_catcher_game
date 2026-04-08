@@ -6,8 +6,8 @@ import { ChevronDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export function WalletSelector() {
-  const { address, isConnected, chainId } = useAccount();
-  const { connect, connectors, isPending } = useConnect();
+  const { address, isConnected } = useAccount();
+  const { connect, connectors, isPending, isError, error } = useConnect();
   const { disconnect } = useDisconnect();
   const [mounted, setMounted] = useState(false);
 
@@ -38,23 +38,28 @@ export function WalletSelector() {
     );
   }
 
-  // Try to find the Base Account connector first (preferred in Base App)
-  const baseAccountConnector = connectors.find(c => c.id === 'baseAccount');
-  const injectedConnector = connectors.find(c => c.id === 'injected');
-  const preferredConnector = baseAccountConnector || injectedConnector;
+  const handleConnect = () => {
+    const connector = connectors[0];
+    if (connector) {
+      connect({ connector });
+    }
+  };
 
   return (
-    <Button
-      onClick={() => {
-        if (preferredConnector) {
-          connect({ connector: preferredConnector });
-        }
-      }}
-      disabled={isPending}
-      className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all"
-    >
-      {isPending ? 'Connecting...' : 'Connect Wallet'}
-      <ChevronDown className="w-4 h-4 ml-1" />
-    </Button>
+    <div className="flex flex-col gap-2">
+      <Button
+        onClick={handleConnect}
+        disabled={isPending || connectors.length === 0}
+        className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:scale-[1.02] transition-all"
+      >
+        {isPending ? 'Connecting...' : 'Connect Wallet'}
+        <ChevronDown className="w-4 h-4 ml-1" />
+      </Button>
+      {isError && error && (
+        <p className="text-xs text-red-600 text-center">
+          {error.message || 'Connection failed'}
+        </p>
+      )}
+    </div>
   );
 }

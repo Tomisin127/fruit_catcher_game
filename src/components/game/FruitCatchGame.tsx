@@ -175,9 +175,9 @@ export function FruitCatchGame() {
       </div>
     );
   }
-}
 
   // Render home screen if not started
+  return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

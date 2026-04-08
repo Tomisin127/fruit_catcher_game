@@ -3,7 +3,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider, createConfig, createStorage, cookieStorage, http } from 'wagmi';
 import { base } from 'wagmi/chains';
-import { baseAccount, injected } from 'wagmi/connectors';
+import { injected } from 'wagmi/connectors';
 import type { ReactNode } from 'react';
 
 const queryClient = new QueryClient();
@@ -13,9 +13,6 @@ export const config = createConfig({
   chains: [base],
   connectors: [
     injected(),
-    baseAccount({
-      appName: 'Fruit Catcher Game',
-    }),
   ],
   storage: createStorage({ storage: cookieStorage }),
   ssr: true,
