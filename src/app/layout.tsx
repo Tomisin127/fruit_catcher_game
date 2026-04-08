@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import "./onchainkit.css";
 import { ResponseLogger } from "@/components/response-logger";
 import { cookies } from "next/headers";
 import { ReadyNotifier } from "@/components/ready-notifier";
@@ -25,20 +24,7 @@ export const metadata: Metadata = {
   description: "A colorful 2D game where you catch falling fruits with a touch-responsive basket. Earn different points for different fruits, and claim high scores as FRUITS tokens on Base!",
   other: {
     "base:app_id": "6962553e8a6eeb04b568dc5d",
-    "fc:frame": JSON.stringify({
-      "version": "next",
-      "imageUrl": "https://files.catbox.moe/8xxbz3.jpg",
-      "button": {
-        "title": "Open with Ohara",
-        "action": {
-          "type": "launch_frame",
-          "name": "Fruit Catcher Game",
-          "url": "https://collect-heard-387.app.ohara.ai",
-          "splashImageUrl": "https://usdozf7pplhxfvrl.public.blob.vercel-storage.com/farcaster/splash_images/splash_image1.svg",
-          "splashBackgroundColor": "#ffffff"
-        }
-      }
-    })
+    "builder_code": "bc_m2hcei0g",
   }
 };
 

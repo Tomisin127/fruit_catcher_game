@@ -1,44 +1,18 @@
-'use client'
-
-import { useEffect, useState } from 'react'
-import dynamic from 'next/dynamic'
-
-const FarcasterToastManager = dynamic(() => import('./FarcasterToastManager'), {
-  ssr: false,
-  loading: () => null
-})
-
-const FarcasterManifestSigner = dynamic(() => import('./FarcasterManifestSigner'), {
-  ssr: false,
-  loading: () => null
-})
+/**
+ * FarcasterWrapper - Legacy component for Farcaster mini-app support
+ * 
+ * This component is a no-op in the Base App standard web app environment.
+ * The app now uses wagmi + SIWE for authentication and wallet connection.
+ * 
+ * Kept for backwards compatibility but can be removed if not needed.
+ */
 
 interface FarcasterWrapperProps {
   children: React.ReactNode
 }
 
 export default function FarcasterWrapper({ children }: FarcasterWrapperProps): JSX.Element {
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  if (!isMounted) {
-    return <>{children}</>
-  }
-
-  return (
-    <FarcasterToastManager>
-      {({ onManifestSuccess, onManifestError }) => (
-        <>
-          <FarcasterManifestSigner 
-            onSuccess={onManifestSuccess}
-            onError={onManifestError}
-          />
-          {children}
-        </>
-      )}
-    </FarcasterToastManager>
-  )
+  // In the Base App, we no longer need Farcaster manifest signing.
+  // The app works as a standard web app with wagmi connectors.
+  return <>{children}</>;
 }
