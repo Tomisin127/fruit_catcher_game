@@ -3,7 +3,7 @@ import type { FruitConfig, Position, Velocity } from '@/types/game';
 import { GAME_HEIGHT, GRAVITY } from '../constants';
 
 export class Fruit {
-  public sprite: PIXI.Graphics;
+  public sprite: PIXI.Sprite | PIXI.Graphics;
   public position: Position;
   public velocity: Velocity;
   public config: FruitConfig;
@@ -27,10 +27,20 @@ export class Fruit {
     this.glowSprite.x = x;
     this.glowSprite.y = this.position.y;
 
-    // Create main fruit sprite (inner circle)
-    this.sprite = new PIXI.Graphics();
-    this.sprite.circle(0, 0, this.radius);
-    this.sprite.fill({ color: config.color, alpha: 0.8 });
+    // Create main fruit sprite - try to use image, fallback to graphics
+    try {
+      const texture = PIXI.Texture.from(config.imagePath);
+      this.sprite = new PIXI.Sprite(texture);
+      this.sprite.width = this.radius * 2;
+      this.sprite.height = this.radius * 2;
+      this.sprite.anchor.set(0.5, 0.5);
+    } catch {
+      // Fallback to graphics if image fails to load
+      this.sprite = new PIXI.Graphics();
+      (this.sprite as PIXI.Graphics).circle(0, 0, this.radius);
+      (this.sprite as PIXI.Graphics).fill({ color: config.color, alpha: 0.8 });
+    }
+    
     this.sprite.x = x;
     this.sprite.y = this.position.y;
   }

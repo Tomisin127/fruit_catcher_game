@@ -276,15 +276,15 @@ export function GameCanvas({ onScoreUpdate, onGameOver, onComboUpdate }: GameCan
   return (
     <div 
       ref={containerRef} 
-      className="relative mx-auto bg-slate-900"
+      className="relative mx-auto bg-gradient-to-b from-blue-100 via-sky-50 to-white rounded-3xl border-4 border-white shadow-2xl overflow-hidden"
       style={{
         width: '100%',
         maxWidth: `${GAME_WIDTH}px`,
         height: `${GAME_HEIGHT}px`,
         maxHeight: '80vh',
-        borderRadius: '12px',
+        borderRadius: '24px',
         overflow: 'hidden',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.5)',
       }}
     />
   );

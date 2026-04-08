@@ -3,7 +3,7 @@ import type { Position } from '@/types/game';
 import { BASKET_WIDTH, BASKET_HEIGHT, GAME_WIDTH, COLORS } from '../constants';
 
 export class Basket {
-  public sprite: PIXI.Graphics;
+  public sprite: PIXI.Sprite | PIXI.Graphics;
   public position: Position;
   public width: number = BASKET_WIDTH;
   public height: number = BASKET_HEIGHT;
@@ -18,9 +18,21 @@ export class Basket {
     this.glowSprite = new PIXI.Graphics();
     this.updateGlow();
 
-    // Create main basket sprite (U-shaped container)
-    this.sprite = new PIXI.Graphics();
-    this.updateSprite();
+    // Create main basket sprite - try to load image, fallback to graphics
+    try {
+      const texture = PIXI.Texture.from('/basket.png');
+      this.sprite = new PIXI.Sprite(texture);
+      this.sprite.width = this.width;
+      this.sprite.height = this.height;
+      this.sprite.anchor.set(0.5, 0.5);
+    } catch {
+      // Fallback to graphics if image fails to load
+      this.sprite = new PIXI.Graphics();
+      this.updateGraphicsSprite();
+    }
+    
+    this.sprite.x = this.position.x;
+    this.sprite.y = this.position.y;
   }
 
   private updateGlow(): void {
@@ -37,7 +49,9 @@ export class Basket {
     this.glowSprite.y = this.position.y;
   }
 
-  private updateSprite(): void {
+  private updateGraphicsSprite(): void {
+    if (!(this.sprite instanceof PIXI.Graphics)) return;
+    
     this.sprite.clear();
     
     // U-shaped basket with liquid appearance
@@ -82,15 +96,18 @@ export class Basket {
   }
 
   public triggerCatchEffect(fruitColor: number): void {
+    // Only apply color effect if using fallback graphics
+    if (!(this.sprite instanceof PIXI.Graphics)) return;
+    
     // Color merge effect
     const targetColor = this.lerpColor(this.currentColor, fruitColor, 0.3);
     this.currentColor = targetColor;
-    this.updateSprite();
+    this.updateGraphicsSprite();
 
     // Reset color after a delay
     setTimeout(() => {
       this.currentColor = COLORS.basketMain;
-      this.updateSprite();
+      this.updateGraphicsSprite();
     }, 300);
   }
 
