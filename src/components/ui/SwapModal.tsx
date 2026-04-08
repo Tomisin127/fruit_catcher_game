@@ -446,9 +446,6 @@ export function SwapModal({ trigger }: SwapModalProps) {
             <div className="bg-muted rounded-2xl p-4 space-y-2">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-muted-foreground">You pay</span>
-                <span className="text-sm text-muted-foreground">
-                  Balance: {parseFloat(formatEther(inputBalance)).toFixed(4)} {inputToken}
-                </span>
               </div>
               <div className="flex items-center gap-3">
                 <input
@@ -456,7 +453,7 @@ export function SwapModal({ trigger }: SwapModalProps) {
                   placeholder="0.0"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="flex-1 bg-transparent text-2xl font-bold text-foreground outline-none placeholder:text-muted-foreground"
+                  className="flex-1 bg-transparent text-2xl font-bold text-foreground outline-none placeholder:text-muted-foreground min-w-0"
                 />
                 <span className="text-sm font-semibold text-foreground bg-background px-2 py-1 rounded-lg flex-shrink-0">
                   {inputToken}
@@ -464,7 +461,7 @@ export function SwapModal({ trigger }: SwapModalProps) {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-xs text-muted-foreground">
-                  Balance: {inputBalance ? parseFloat(inputBalance).toFixed(4) : '0.0'}
+                  Balance: {parseFloat(formatEther(inputBalance)).toFixed(6)} {inputToken}
                 </span>
                 <button
                   onClick={handleMax}

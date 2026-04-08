@@ -2,8 +2,8 @@
 
 import { useRef, useEffect, useCallback } from 'react';
 import * as PIXI from 'pixi.js';
-import { Basket } from '@/lib/game/entities/Basket';
-import { Fruit } from '@/lib/game/entities/Fruit';
+import { Basket, preloadBasketTexture } from '@/lib/game/entities/Basket';
+import { Fruit, preloadFruitTextures } from '@/lib/game/entities/Fruit';
 import { CollisionSystem } from '@/lib/game/systems/CollisionSystem';
 import { SpawnSystem } from '@/lib/game/systems/SpawnSystem';
 import { ParticleSystem } from '@/lib/game/systems/ParticleSystem';
@@ -184,6 +184,10 @@ export function GameCanvas({ onScoreUpdate, onGameOver, onComboUpdate }: GameCan
       try {
         console.log('Initializing PixiJS game...');
         
+        // Preload all textures first
+        await Promise.all([preloadFruitTextures(), preloadBasketTexture()]);
+        console.log('Textures preloaded');
+        
         const app = new PIXI.Application();
         
         await app.init({
@@ -212,39 +216,55 @@ export function GameCanvas({ onScoreUpdate, onGameOver, onComboUpdate }: GameCan
         appRef.current = app;
 
         // Create background elements
-        // Sky gradient
+        // Sky gradient - larger sky (85% of screen)
         const skyGraphics = new PIXI.Graphics();
-        skyGraphics.rect(0, 0, GAME_WIDTH, GAME_HEIGHT * 0.65);
+        skyGraphics.rect(0, 0, GAME_WIDTH, GAME_HEIGHT * 0.85);
         skyGraphics.fill({ color: 0x87CEEB }); // Sky blue
         app.stage.addChild(skyGraphics);
 
-        // Clouds
+        // Sun
+        const sun = new PIXI.Graphics();
+        sun.circle(50, 60, 30);
+        sun.fill({ color: 0xFFD700, alpha: 0.9 });
+        app.stage.addChild(sun);
+
+        // Clouds - animated feel
         const cloud1 = new PIXI.Graphics();
-        cloud1.ellipse(60, 80, 45, 20);
-        cloud1.fill({ color: 0xFFFFFF, alpha: 0.6 });
-        cloud1.ellipse(100, 75, 50, 25);
-        cloud1.fill({ color: 0xFFFFFF, alpha: 0.6 });
+        cloud1.ellipse(100, 100, 35, 15);
+        cloud1.fill({ color: 0xFFFFFF, alpha: 0.7 });
+        cloud1.ellipse(130, 95, 40, 18);
+        cloud1.fill({ color: 0xFFFFFF, alpha: 0.7 });
+        cloud1.ellipse(155, 100, 30, 14);
+        cloud1.fill({ color: 0xFFFFFF, alpha: 0.7 });
         app.stage.addChild(cloud1);
 
         const cloud2 = new PIXI.Graphics();
-        cloud2.ellipse(280, 120, 40, 18);
-        cloud2.fill({ color: 0xFFFFFF, alpha: 0.5 });
-        cloud2.ellipse(320, 115, 45, 22);
-        cloud2.fill({ color: 0xFFFFFF, alpha: 0.5 });
+        cloud2.ellipse(280, 150, 30, 12);
+        cloud2.fill({ color: 0xFFFFFF, alpha: 0.6 });
+        cloud2.ellipse(305, 145, 35, 15);
+        cloud2.fill({ color: 0xFFFFFF, alpha: 0.6 });
         app.stage.addChild(cloud2);
 
-        // Land/ground
+        // Land/ground - smaller (15% of screen)
         const groundGraphics = new PIXI.Graphics();
-        groundGraphics.rect(0, GAME_HEIGHT * 0.65, GAME_WIDTH, GAME_HEIGHT * 0.35);
-        groundGraphics.fill({ color: 0x90EE90 }); // Light green grass
+        groundGraphics.rect(0, GAME_HEIGHT * 0.85, GAME_WIDTH, GAME_HEIGHT * 0.15);
+        groundGraphics.fill({ color: 0x8B4513 }); // Brown earth
         app.stage.addChild(groundGraphics);
 
-        // Ground details - grass tufts
-        for (let i = 0; i < GAME_WIDTH; i += 30) {
-          const grassTuft = new PIXI.Graphics();
-          grassTuft.rect(i, GAME_HEIGHT * 0.64, 20, 8);
-          grassTuft.fill({ color: 0x7CCD7C, alpha: 0.8 });
-          app.stage.addChild(grassTuft);
+        // Green grass layer on top of ground
+        const grassLayer = new PIXI.Graphics();
+        grassLayer.rect(0, GAME_HEIGHT * 0.85, GAME_WIDTH, 15);
+        grassLayer.fill({ color: 0x228B22 }); // Forest green
+        app.stage.addChild(grassLayer);
+
+        // Grass blade details
+        for (let i = 0; i < GAME_WIDTH; i += 8) {
+          const blade = new PIXI.Graphics();
+          blade.moveTo(i, GAME_HEIGHT * 0.85);
+          blade.lineTo(i + 4, GAME_HEIGHT * 0.85 - 8);
+          blade.lineTo(i + 8, GAME_HEIGHT * 0.85);
+          blade.fill({ color: 0x32CD32, alpha: 0.9 });
+          app.stage.addChild(blade);
         }
         particleSystemRef.current = new ParticleSystem(app.stage);
 

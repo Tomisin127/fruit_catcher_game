@@ -2,11 +2,22 @@ import * as PIXI from 'pixi.js';
 import type { Position } from '@/types/game';
 import { BASKET_WIDTH, BASKET_HEIGHT, GAME_WIDTH, COLORS } from '../constants';
 
+// Cache for basket texture
+let basketTextureCache: PIXI.Texture | null = null;
+
+export async function preloadBasketTexture(): Promise<void> {
+  try {
+    basketTextureCache = await PIXI.Assets.load('/basket.png');
+  } catch (error) {
+    console.warn('Failed to preload basket texture:', error);
+  }
+}
+
 export class Basket {
   public sprite: PIXI.Sprite | PIXI.Graphics;
   public position: Position;
-  public width: number = BASKET_WIDTH;
-  public height: number = BASKET_HEIGHT;
+  public width: number = BASKET_WIDTH * 1.3; // Bigger basket
+  public height: number = BASKET_HEIGHT * 1.3;
   private glowSprite: PIXI.Graphics;
   private wobblePhase: number = 0;
   public currentColor: number = COLORS.basketMain;
@@ -18,15 +29,14 @@ export class Basket {
     this.glowSprite = new PIXI.Graphics();
     this.updateGlow();
 
-    // Create main basket sprite - try to load image, fallback to graphics
-    try {
-      const texture = PIXI.Texture.from('/basket.png');
-      this.sprite = new PIXI.Sprite(texture);
+    // Create main basket sprite - use cached texture or fallback to graphics
+    if (basketTextureCache && basketTextureCache.valid) {
+      this.sprite = new PIXI.Sprite(basketTextureCache);
       this.sprite.width = this.width;
       this.sprite.height = this.height;
       this.sprite.anchor.set(0.5, 0.5);
-    } catch {
-      // Fallback to graphics if image fails to load
+    } else {
+      // Fallback to nice looking graphics basket
       this.sprite = new PIXI.Graphics();
       this.updateGraphicsSprite();
     }
@@ -54,21 +64,41 @@ export class Basket {
     
     this.sprite.clear();
     
-    // U-shaped basket with liquid appearance
+    // Basket body - woven look
     this.sprite.roundRect(
       -this.width / 2,
       -this.height / 2,
       this.width,
       this.height,
-      15
+      12
     );
-    this.sprite.fill({ color: this.currentColor, alpha: 0.9 });
+    this.sprite.fill({ color: 0x8B4513, alpha: 1 }); // Brown
     
-    // Add rim highlights
-    this.sprite.circle(-this.width / 2 + 5, 0, 5);
-    this.sprite.fill({ color: 0xFFFFFF, alpha: 0.6 });
-    this.sprite.circle(this.width / 2 - 5, 0, 5);
-    this.sprite.fill({ color: 0xFFFFFF, alpha: 0.6 });
+    // Inner basket
+    this.sprite.roundRect(
+      -this.width / 2 + 6,
+      -this.height / 2 + 6,
+      this.width - 12,
+      this.height - 6,
+      8
+    );
+    this.sprite.fill({ color: 0xD2691E, alpha: 1 }); // Lighter brown
+    
+    // Weave pattern lines
+    for (let i = -this.width / 2 + 10; i < this.width / 2 - 10; i += 12) {
+      this.sprite.rect(i, -this.height / 2 + 2, 2, this.height - 4);
+      this.sprite.fill({ color: 0x654321, alpha: 0.5 });
+    }
+    
+    // Rim highlight
+    this.sprite.roundRect(
+      -this.width / 2,
+      -this.height / 2,
+      this.width,
+      8,
+      6
+    );
+    this.sprite.fill({ color: 0xA0522D, alpha: 1 });
 
     this.sprite.x = this.position.x;
     this.sprite.y = this.position.y;
