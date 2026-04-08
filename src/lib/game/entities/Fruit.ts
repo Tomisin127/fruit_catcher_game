@@ -2,6 +2,23 @@ import * as PIXI from 'pixi.js';
 import type { FruitConfig, Position, Velocity } from '@/types/game';
 import { GAME_HEIGHT, GRAVITY } from '../constants';
 
+// Pre-load textures cache
+const textureCache: Map<string, PIXI.Texture> = new Map();
+
+// Preload all fruit textures
+export async function preloadFruitTextures(): Promise<void> {
+  const fruitPaths = ['/strawberry.png', '/banana.png', '/watermelon.png', '/basket.png'];
+  
+  for (const path of fruitPaths) {
+    try {
+      const texture = await PIXI.Assets.load(path);
+      textureCache.set(path, texture);
+    } catch (error) {
+      console.warn(`Failed to preload texture: ${path}`, error);
+    }
+  }
+}
+
 export class Fruit {
   public sprite: PIXI.Sprite | PIXI.Graphics;
   public position: Position;
@@ -15,34 +32,38 @@ export class Fruit {
   constructor(x: number, config: FruitConfig) {
     this.config = config;
     this.initialScale = config.scale;
-    this.radius = 15 * config.scale;
+    this.radius = 20 * config.scale; // Bigger fruits for visibility
     
     this.position = { x, y: -this.radius * 2 };
     this.velocity = { x: 0, y: config.fallSpeed };
 
     // Create glow effect (outer circle)
     this.glowSprite = new PIXI.Graphics();
-    this.glowSprite.circle(0, 0, this.radius * 1.5);
-    this.glowSprite.fill({ color: config.glowColor, alpha: 0.3 });
+    this.glowSprite.circle(0, 0, this.radius * 1.3);
+    this.glowSprite.fill({ color: config.glowColor, alpha: 0.4 });
     this.glowSprite.x = x;
     this.glowSprite.y = this.position.y;
 
-    // Create main fruit sprite - try to use image, fallback to graphics
-    try {
-      // Use absolute URL for PIXI to load images correctly
-      const imagePath = config.imagePath.startsWith('/') 
-        ? config.imagePath 
-        : `/${config.imagePath}`;
-      const texture = PIXI.Texture.from(imagePath);
-      this.sprite = new PIXI.Sprite(texture);
-      this.sprite.width = this.radius * 2;
-      this.sprite.height = this.radius * 2;
+    // Create main fruit sprite - use cached texture or fallback to graphics
+    const imagePath = config.imagePath.startsWith('/') 
+      ? config.imagePath 
+      : `/${config.imagePath}`;
+    
+    const cachedTexture = textureCache.get(imagePath);
+    
+    if (cachedTexture && cachedTexture.valid) {
+      this.sprite = new PIXI.Sprite(cachedTexture);
+      this.sprite.width = this.radius * 2.5;
+      this.sprite.height = this.radius * 2.5;
       this.sprite.anchor.set(0.5, 0.5);
-    } catch (error) {
-      // Fallback to graphics if image fails to load
+    } else {
+      // Fallback to colorful graphics
       this.sprite = new PIXI.Graphics();
       (this.sprite as PIXI.Graphics).circle(0, 0, this.radius);
-      (this.sprite as PIXI.Graphics).fill({ color: config.color, alpha: 0.8 });
+      (this.sprite as PIXI.Graphics).fill({ color: config.color, alpha: 1 });
+      // Add shine effect
+      (this.sprite as PIXI.Graphics).circle(-this.radius * 0.3, -this.radius * 0.3, this.radius * 0.3);
+      (this.sprite as PIXI.Graphics).fill({ color: 0xFFFFFF, alpha: 0.4 });
     }
     
     this.sprite.x = x;

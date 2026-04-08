@@ -57,6 +57,7 @@ export function FruitCatchGame() {
   useEffect(() => {
     if (isConfirmed) {
       setIsClaiming(false);
+      setHasMintedThisGame(true);
       toast.success('Fruits tokens minted successfully!');
     }
   }, [isConfirmed]);
@@ -113,7 +114,6 @@ export function FruitCatchGame() {
     }
 
     setIsClaiming(true);
-    setHasMintedThisGame(true);
     
     try {
       const tokensToMint = BigInt(score) * BigInt(10 ** 18);
@@ -137,7 +137,6 @@ export function FruitCatchGame() {
       console.error('Failed to mint tokens:', error);
       toast.error('Failed to mint tokens. Please try again.');
       setIsClaiming(false);
-      setHasMintedThisGame(false);
     }
   }, [score, isConnected, sendTransaction, hasMintedThisGame]);
 
