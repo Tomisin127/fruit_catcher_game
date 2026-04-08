@@ -67,13 +67,13 @@ export function GameOverScreen({
         </div>
 
         {/* Action Buttons */}
-        <div className="space-y-3">
+        <div className="space-y-2">
           {/* Play Again - Primary CTA */}
           <Button
             onClick={onRestart}
-            className="w-full bg-gradient-to-r from-strawberry via-grape to-secondary text-white font-bold py-6 text-lg rounded-2xl shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] hover:shadow-xl"
+            className="w-full bg-gradient-to-r from-strawberry via-grape to-secondary text-white font-bold py-4 text-base rounded-lg shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] hover:shadow-xl"
           >
-            <RotateCcw className="w-5 h-5 mr-2" />
+            <RotateCcw className="w-4 h-4 mr-2" />
             Play Again
           </Button>
 
@@ -82,7 +82,7 @@ export function GameOverScreen({
             <Button
               onClick={onClaimScore}
               disabled={isClaiming || score === 0 || hasMintedThisGame}
-              className={`w-full font-bold py-6 text-lg rounded-2xl shadow-md transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] ${
+              className={`w-full font-bold py-4 text-base rounded-lg shadow-md transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] ${
                 hasMintedThisGame
                   ? 'bg-secondary/10 text-secondary border-2 border-secondary/30'
                   : 'bg-gradient-to-r from-secondary to-secondary/80 text-white hover:shadow-lg'
@@ -90,17 +90,17 @@ export function GameOverScreen({
             >
               {hasMintedThisGame ? (
                 <>
-                  <Check className="w-5 h-5 mr-2" />
+                  <Check className="w-4 h-4 mr-2" />
                   Tokens Minted!
                 </>
               ) : isClaiming ? (
                 <>
-                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                   Minting...
                 </>
               ) : (
                 <>
-                  <Coins className="w-5 h-5 mr-2" />
+                  <Coins className="w-4 h-4 mr-2" />
                   Mint {score} FRUITS
                 </>
               )}
@@ -121,7 +121,7 @@ export function GameOverScreen({
             trigger={
               <Button
                 variant="outline"
-                className="w-full border-2 border-secondary/30 bg-secondary/5 text-secondary font-semibold py-5 text-base rounded-2xl hover:bg-secondary/10 hover:border-secondary/50 transition-all duration-200"
+                className="w-full border-2 border-secondary/30 bg-secondary/5 text-secondary font-semibold py-3 text-sm rounded-lg hover:bg-secondary/10 hover:border-secondary/50 transition-all duration-200"
               >
                 <ArrowLeftRight className="w-4 h-4 mr-2" />
                 Swap FRUITS
@@ -133,7 +133,7 @@ export function GameOverScreen({
           <Button
             onClick={onBackToHome}
             variant="ghost"
-            className="w-full text-muted-foreground hover:text-foreground font-medium py-5 text-base rounded-2xl transition-all duration-200 hover:bg-muted"
+            className="w-full text-muted-foreground hover:text-foreground font-medium py-3 text-sm rounded-lg transition-all duration-200 hover:bg-muted"
           >
             <Home className="w-4 h-4 mr-2" />
             Back to Home

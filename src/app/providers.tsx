@@ -1,28 +1,40 @@
 'use client';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { WagmiProvider } from 'wagmi';
-import { RainbowKitProvider, getDefaultConfig } from '@rainbow-me/rainbowkit';
-import { base } from 'viem/chains';
+import { WagmiProvider, createConfig, createStorage, cookieStorage, http } from 'wagmi';
+import { base } from 'wagmi/chains';
+import { baseAccount, injected } from 'wagmi/connectors';
 import type { ReactNode } from 'react';
-import '@rainbow-me/rainbowkit/styles.css';
 
 const queryClient = new QueryClient();
 
-const config = getDefaultConfig({
-  appName: 'Fruit Catcher Game',
-  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'YOUR_PROJECT_ID',
+// Create Base App-compatible wagmi config
+export const config = createConfig({
   chains: [base],
+  connectors: [
+    injected(),
+    baseAccount({
+      appName: 'Fruit Catcher Game',
+    }),
+  ],
+  storage: createStorage({ storage: cookieStorage }),
   ssr: true,
+  transports: {
+    [base.id]: http(),
+  },
 });
+
+declare module 'wagmi' {
+  interface Register {
+    config: typeof config;
+  }
+}
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>
-          {children}
-        </RainbowKitProvider>
+        {children}
       </QueryClientProvider>
     </WagmiProvider>
   );

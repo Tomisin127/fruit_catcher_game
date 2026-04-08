@@ -260,12 +260,12 @@ export function FruitCatchGame() {
           </div>
 
           {/* Action buttons */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <Button
               onClick={handleStart}
-              className="w-full bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 text-white font-black py-8 text-xl rounded-2xl shadow-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] hover:shadow-2xl"
+              className="w-full bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 text-white font-black py-3 text-base rounded-xl shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] hover:shadow-xl"
             >
-              <Play className="w-6 h-6 mr-2 fill-current" />
+              <Play className="w-5 h-5 mr-2 fill-current" />
               Start Game
             </Button>
 
@@ -273,9 +273,9 @@ export function FruitCatchGame() {
               trigger={
                 <Button
                   variant="outline"
-                  className="w-full border-2 border-purple-300 bg-purple-50 text-purple-700 font-bold py-6 text-lg rounded-2xl hover:bg-purple-100 hover:border-purple-400 transition-all duration-300"
+                  className="w-full border-2 border-purple-300 bg-purple-50 text-purple-700 font-bold py-3 text-sm rounded-xl hover:bg-purple-100 hover:border-purple-400 transition-all duration-300"
                 >
-                  <ArrowLeftRight className="w-5 h-5 mr-2" />
+                  <ArrowLeftRight className="w-4 h-4 mr-2" />
                   Swap FRUITS Token
                 </Button>
               }
