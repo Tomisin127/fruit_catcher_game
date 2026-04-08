@@ -181,86 +181,72 @@ export function FruitCatchGame() {
           <WalletSelector />
         </div>
 
-        <div className="max-w-md w-full space-y-8">
-          {/* Logo and title */}
-          <div className="text-center space-y-4">
-            <div className="inline-flex items-center justify-center">
-              <div className="relative">
-                <h1 className="text-6xl md:text-7xl font-black tracking-tight">
-                  <span className="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent">Fruit</span>
-                  <span className="text-gray-800 ml-2">Catch</span>
-                </h1>
-                <div className="absolute -top-3 -right-8 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                  BASE
-                </div>
-              </div>
+        <div className="max-w-md w-full space-y-5">
+          {/* Logo and title - Fruit styled */}
+          <div className="text-center space-y-2">
+            <div className="inline-flex items-center justify-center gap-1 flex-wrap">
+              <span className="text-5xl">🍓</span>
+              <h1 className="text-5xl font-black tracking-tight text-gray-800">
+                Fruit Catch
+              </h1>
+              <span className="text-5xl">🍌</span>
             </div>
-            <p className="text-gray-600 text-lg font-semibold">
-              Catch fruits. Earn tokens. Play on Base.
+            <p className="text-gray-600 text-sm font-semibold">
+              Catch fruits. Earn tokens.
             </p>
           </div>
 
           {/* High Score Badge */}
           {highScore > 0 && (
             <div className="flex justify-center">
-              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-100 to-orange-100 border-2 border-yellow-300 text-gray-800 px-6 py-3 rounded-full shadow-lg">
-                <Trophy className="w-6 h-6 text-yellow-600" />
-                <span className="font-black text-lg">High Score: {highScore}</span>
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-100 to-orange-100 border-2 border-yellow-300 text-gray-800 px-4 py-2 rounded-full shadow-lg text-sm">
+                <Trophy className="w-4 h-4 text-yellow-600" />
+                <span className="font-bold">High Score: {highScore}</span>
               </div>
             </div>
           )}
 
-          {/* Game rules card */}
-          <div className="bg-white/90 backdrop-blur-xl border-2 border-gray-200 rounded-3xl p-8 space-y-6 shadow-xl">
-            <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
-              <div className="bg-orange-100 p-3 rounded-xl">
-                <Zap className="w-6 h-6 text-orange-600" />
-              </div>
-              How to Play
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="flex items-center gap-4 p-4 bg-red-50 border-2 border-red-200 rounded-2xl transition-all hover:bg-red-100">
-                <div className="bg-red-200 p-3 rounded-xl">
-                  <Cherry className="w-7 h-7 text-red-600" />
+          {/* Game rules card - Compact */}
+          <div className="bg-white/90 backdrop-blur-xl border-2 border-gray-200 rounded-2xl p-4 space-y-3 shadow-lg">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 p-2 bg-red-50 border-2 border-red-200 rounded-lg transition-all hover:bg-red-100">
+                <div className="bg-red-200 p-1.5 rounded-lg">
+                  <Cherry className="w-5 h-5 text-red-600" />
                 </div>
-                <div>
-                  <div className="text-gray-800 font-bold">Strawberry</div>
-                  <div className="text-gray-600 text-sm font-semibold">+10 points</div>
+                <div className="flex-1">
+                  <div className="text-gray-800 font-bold text-sm">Strawberry +10</div>
                 </div>
               </div>
               
-              <div className="flex items-center gap-4 p-4 bg-yellow-50 border-2 border-yellow-200 rounded-2xl transition-all hover:bg-yellow-100">
-                <div className="bg-yellow-200 p-3 rounded-xl">
-                  <Citrus className="w-7 h-7 text-yellow-600" />
+              <div className="flex items-center gap-2 p-2 bg-yellow-50 border-2 border-yellow-200 rounded-lg transition-all hover:bg-yellow-100">
+                <div className="bg-yellow-200 p-1.5 rounded-lg">
+                  <Citrus className="w-5 h-5 text-yellow-600" />
                 </div>
-                <div>
-                  <div className="text-gray-800 font-bold">Banana</div>
-                  <div className="text-gray-600 text-sm font-semibold">+20 points (faster)</div>
+                <div className="flex-1">
+                  <div className="text-gray-800 font-bold text-sm">Banana +20</div>
                 </div>
               </div>
               
-              <div className="flex items-center gap-4 p-4 bg-green-50 border-2 border-green-200 rounded-2xl transition-all hover:bg-green-100">
-                <div className="bg-green-200 p-3 rounded-xl">
-                  <Grape className="w-7 h-7 text-green-600" />
+              <div className="flex items-center gap-2 p-2 bg-green-50 border-2 border-green-200 rounded-lg transition-all hover:bg-green-100">
+                <div className="bg-green-200 p-1.5 rounded-lg">
+                  <Grape className="w-5 h-5 text-green-600" />
                 </div>
-                <div>
-                  <div className="text-gray-800 font-bold">Watermelon</div>
-                  <div className="text-gray-600 text-sm font-semibold">+30 points (rare)</div>
+                <div className="flex-1">
+                  <div className="text-gray-800 font-bold text-sm">Watermelon +30</div>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 text-red-600 text-sm pt-4 border-t-2 border-gray-200 font-semibold">
-              <div className="bg-red-100 p-2 rounded-lg">
-                <span className="text-base font-black">!</span>
+            <div className="flex items-center gap-2 text-red-600 text-xs pt-2 border-t-2 border-gray-200 font-semibold">
+              <div className="bg-red-100 p-1 rounded-lg">
+                <span className="text-sm font-black">!</span>
               </div>
-              <span>Miss a fruit and it&apos;s game over</span>
+              <span>Miss = Game Over</span>
             </div>
           </div>
 
           {/* Action buttons */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <Button
               onClick={handleStart}
               className="w-full bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 text-white font-black py-3 text-base rounded-xl shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] hover:shadow-xl"
@@ -284,13 +270,13 @@ export function FruitCatchGame() {
 
           {/* Wallet connection status */}
           {isConnected ? (
-            <div className="flex items-center justify-center gap-2 text-green-600 text-sm font-bold">
-              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-              <span>Wallet connected - Ready to earn on Base</span>
+            <div className="flex items-center justify-center gap-2 text-green-600 text-xs font-bold">
+              <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
+              <span>Wallet connected</span>
             </div>
           ) : (
-            <p className="text-center text-gray-600 text-sm font-semibold">
-              Connect wallet to mint your score as FRUITS tokens
+            <p className="text-center text-gray-600 text-xs font-semibold">
+              Connect wallet to earn FRUITS tokens
             </p>
           )}
         </div>
