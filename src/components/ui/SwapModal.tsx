@@ -447,17 +447,17 @@ export function SwapModal({ trigger }: SwapModalProps) {
                   onChange={(e) => setAmount(e.target.value)}
                   className="flex-1 bg-transparent text-3xl font-bold text-foreground outline-none placeholder:text-muted-foreground"
                 />
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={handleMax}
-                    className="text-xs bg-primary/20 text-primary px-2 py-1 rounded-md hover:bg-primary/30 transition-colors"
-                  >
-                    MAX
-                  </button>
-                  <span className="text-lg font-semibold text-foreground bg-background px-3 py-1.5 rounded-lg">
-                    {inputToken}
-                  </span>
-                </div>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={handleMax}
+                  className="text-xs bg-primary/20 text-primary px-1.5 py-0.5 rounded-md hover:bg-primary/30 transition-colors flex-shrink-0"
+                >
+                  MAX
+                </button>
+                <span className="text-sm font-semibold text-foreground bg-background px-2 py-1 rounded-lg flex-shrink-0">
+                  {inputToken}
+                </span>
+              </div>
               </div>
             </div>
 
