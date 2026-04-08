@@ -211,7 +211,41 @@ export function GameCanvas({ onScoreUpdate, onGameOver, onComboUpdate }: GameCan
 
         appRef.current = app;
 
-        // Initialize particle system
+        // Create background elements
+        // Sky gradient
+        const skyGraphics = new PIXI.Graphics();
+        skyGraphics.rect(0, 0, GAME_WIDTH, GAME_HEIGHT * 0.65);
+        skyGraphics.fill({ color: 0x87CEEB }); // Sky blue
+        app.stage.addChild(skyGraphics);
+
+        // Clouds
+        const cloud1 = new PIXI.Graphics();
+        cloud1.ellipse(60, 80, 45, 20);
+        cloud1.fill({ color: 0xFFFFFF, alpha: 0.6 });
+        cloud1.ellipse(100, 75, 50, 25);
+        cloud1.fill({ color: 0xFFFFFF, alpha: 0.6 });
+        app.stage.addChild(cloud1);
+
+        const cloud2 = new PIXI.Graphics();
+        cloud2.ellipse(280, 120, 40, 18);
+        cloud2.fill({ color: 0xFFFFFF, alpha: 0.5 });
+        cloud2.ellipse(320, 115, 45, 22);
+        cloud2.fill({ color: 0xFFFFFF, alpha: 0.5 });
+        app.stage.addChild(cloud2);
+
+        // Land/ground
+        const groundGraphics = new PIXI.Graphics();
+        groundGraphics.rect(0, GAME_HEIGHT * 0.65, GAME_WIDTH, GAME_HEIGHT * 0.35);
+        groundGraphics.fill({ color: 0x90EE90 }); // Light green grass
+        app.stage.addChild(groundGraphics);
+
+        // Ground details - grass tufts
+        for (let i = 0; i < GAME_WIDTH; i += 30) {
+          const grassTuft = new PIXI.Graphics();
+          grassTuft.rect(i, GAME_HEIGHT * 0.64, 20, 8);
+          grassTuft.fill({ color: 0x7CCD7C, alpha: 0.8 });
+          app.stage.addChild(grassTuft);
+        }
         particleSystemRef.current = new ParticleSystem(app.stage);
 
         // Create basket

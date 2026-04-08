@@ -29,12 +29,16 @@ export class Fruit {
 
     // Create main fruit sprite - try to use image, fallback to graphics
     try {
-      const texture = PIXI.Texture.from(config.imagePath);
+      // Use absolute URL for PIXI to load images correctly
+      const imagePath = config.imagePath.startsWith('/') 
+        ? config.imagePath 
+        : `/${config.imagePath}`;
+      const texture = PIXI.Texture.from(imagePath);
       this.sprite = new PIXI.Sprite(texture);
       this.sprite.width = this.radius * 2;
       this.sprite.height = this.radius * 2;
       this.sprite.anchor.set(0.5, 0.5);
-    } catch {
+    } catch (error) {
       // Fallback to graphics if image fails to load
       this.sprite = new PIXI.Graphics();
       (this.sprite as PIXI.Graphics).circle(0, 0, this.radius);
