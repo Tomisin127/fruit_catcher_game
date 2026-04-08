@@ -155,14 +155,15 @@ export function SwapModal({ trigger }: SwapModalProps) {
       setTokenBalance(tokenBal);
 
       // Check allowance if selling
-      if (!isBuying) {
+      if (!isBuying && amount) {
         const allowance = await publicClient.readContract({
           address: FRUITS_TOKEN,
           abi: ERC20_ABI,
           functionName: 'allowance',
           args: [address, UNISWAP_V3_ROUTER]
         });
-        setNeedsApproval(allowance < tokenBalance);
+        const amountToSwap = parseEther(amount);
+        setNeedsApproval(allowance < amountToSwap);
       } else {
         setNeedsApproval(false);
       }
@@ -295,6 +296,16 @@ export function SwapModal({ trigger }: SwapModalProps) {
       const amountOutMin = parseEther(quote) * BigInt(100 - slippage) / 100n;
       const deadline = BigInt(Math.floor(Date.now() / 1000) + 1800); // 30 minutes
 
+      // Validate balance
+      if (isBuying && amountIn > ethBalance) {
+        toast.error('Insufficient ETH balance');
+        return;
+      }
+      if (!isBuying && amountIn > tokenBalance) {
+        toast.error('Insufficient FRUITS balance');
+        return;
+      }
+
       if (isBuying) {
         // ETH -> Token (Buy)
         const swapData = encodeFunctionData({
@@ -359,7 +370,7 @@ export function SwapModal({ trigger }: SwapModalProps) {
       toast.success('Transaction submitted!');
     } catch (error) {
       console.error('Swap failed:', error);
-      toast.error('Swap failed');
+      toast.error(error instanceof Error ? error.message : 'Swap failed');
     }
   };
 
@@ -445,19 +456,22 @@ export function SwapModal({ trigger }: SwapModalProps) {
                   placeholder="0.0"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="flex-1 bg-transparent text-3xl font-bold text-foreground outline-none placeholder:text-muted-foreground"
+                  className="flex-1 bg-transparent text-2xl font-bold text-foreground outline-none placeholder:text-muted-foreground"
                 />
-              <div className="flex items-center gap-1">
-                <button
-                  onClick={handleMax}
-                  className="text-xs bg-primary/20 text-primary px-1.5 py-0.5 rounded-md hover:bg-primary/30 transition-colors flex-shrink-0"
-                >
-                  MAX
-                </button>
                 <span className="text-sm font-semibold text-foreground bg-background px-2 py-1 rounded-lg flex-shrink-0">
                   {inputToken}
                 </span>
               </div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-muted-foreground">
+                  Balance: {inputBalance ? parseFloat(inputBalance).toFixed(4) : '0.0'}
+                </span>
+                <button
+                  onClick={handleMax}
+                  className="text-xs bg-primary/20 text-primary px-2 py-1 rounded-md hover:bg-primary/30 transition-colors"
+                >
+                  MAX
+                </button>
               </div>
             </div>
 
